@@ -1,0 +1,109 @@
+.DS_Store
+.DS_Store?
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+data
+sava/
+# Eclipse
+.metadata/
+eclimd.log
+.classpath
+.project
+.settings/
+
+# IntelliJ
+/out/
+.idea/
+.idea_modules/
+*.iml
+*.vscode
+*.ipr
+*.iws
+classes/
+
+# Code Coverage Tool
+jacoco.exec
+target/*.jar
+
+# Java template
+*.class
+
+# Package Files
+*.war
+*.ear
+
+target/
+logs/
+*.log
+
+# MyBatis Generated Code
+**/src/main/java/com/talkingdata/datacloud/db/**/*
+
+# Hive
+metastore_db/
+
+# Derby
+derby.log
+
+!mysql-connector-java*
+
+pom.xml.versionsBackup
+
+# Scala Compilation Cache Files
+.cache-main
+.cache-tests
+
+# UI
+data-cloud-report/ui/*.*
+#data-cloud-report/ui/config/
+data-cloud-report/ui/node_modules/
+data-cloud-report/ui/package-lock.json
+data-cloud-report/ui/dist/
+#data-cloud-report/ui/public/
+data-cloud-report/ui/src/app/**/*.js
+data-cloud-report/ui/src/app/**/*.js.map
+
+# wherehows
+wherehows/build/
+wherehows/target/
+wherehows/repos/
+wherehows/tmp/
+wherehows/bin/
+wherehows/.gradle/
+wherehows/.settings
+wherehows/.project
+wherehows/.classpath
+wherehows/*.swp
+wherehows/*.jar
+wherehows/*.idea
+wherehows/*.iml
+wherehows/*.class
+wherehows/*.ipr
+wherehows/*.iws
+wherehows/*.env
+wherehows//RUNNING_PID
+wherehows/backend-service/lib
+wherehows/metadata-etl/src/main/resources/application.properties
+wherehows/**/test/resources/*.properties
+
+data-cloud-report/ui/node/
+#data-cloud-report/ui/dist/
+
+data-cloud-visual/visual-ui/builder/**/*.js
+data-cloud-visual/visual-ui/builder/**/*.js.map
+!data-cloud-visual/visual-ui/builder/src/libs/heatmap/heatmap.js
+data-cloud-report/ui/node_modules.zip
+
+paramsConf/*
+
+
+warehouse
+spark-warehouse
+metastore
+metastore_db
+test/warehouse
+test/metastore
+metastore_db
+venv
