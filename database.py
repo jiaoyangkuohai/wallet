@@ -4,7 +4,7 @@ import sqlite3
 import pandas as pd
 
 
-class DBOperation():
+class DBOperation:
     """
     数据库的一系列操
     增删查改
@@ -12,6 +12,9 @@ class DBOperation():
     def __init__(self):
         self.conn, self.cursor = self.get_conn()
 
+    @classmethod
+    def get_instance(cls):
+        return cls()
 
     # 获取游标
     def get_conn(self):
@@ -48,7 +51,7 @@ class DBOperation():
 
     # 改
     def update_one(self, id=2, date='2020-10-04', firstClass='衣', secondClass='唯品会', price=4000):
-        self.cursor.execute("update wallet set date=?, firstClassifier=?, secondClassifier=?, inOut=? where id=2", (date, firstClass, secondClass, price))
+        self.cursor.execute("update wallet set date=?, firstClassifier=?, secondClassifier=?, inOut=? where id=?", (date, firstClass, secondClass, price, id))
 
     def commit(self):
         self.conn.commit()

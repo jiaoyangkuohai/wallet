@@ -10,10 +10,12 @@ from mytest.mypies import render_df_html
 
 
 class Context(QWidget, Ui_Form):
-    def __init__(self):
+    def __init__(self, update_signal):
         super().__init__()
         self.setupUi(self)
         self.splitter.setSizes([200, 130])
+        self.update_signal = update_signal
+        self.tableWidget.set_signal(update_signal)
         # self._init_table()
         self.df = self.tableWidget.load_data_from_db()
         self._web_init()
@@ -33,7 +35,8 @@ class Context(QWidget, Ui_Form):
         # self.index = "./mytest/render.html"
         # self.index = "./mytest/pie_set_color.html"
         # self.index = "./mytest/pie_base.html"
-        self.index = "./pie_base.html"
+        # self.index = "./pie_base.html"
+        self.index = "./template.html"
         # self.index = "./mytest/multiple_pie.html"
         html_path = QFileInfo(self.index).absoluteFilePath()
         print(html_path)
@@ -41,5 +44,23 @@ class Context(QWidget, Ui_Form):
         self.view.load(self.url)
         self.scrollArea.setWidget(self.view)
 
+    def reload_url(self):
+        self.tableWidget.not_start = True
+        self.tableWidget.load_data_from_db()
+        # 高分屏自适应
+        html_path = "./mytest/multiple_pie.html"
+        html_path = QFileInfo(html_path).absoluteFilePath()
+        self.url = QUrl("file:///" + html_path)
+        self.view.load(self.url)
 
+    def del_one_item(self):
+        connect = DBOperation.get_instance()
+        print(self.tableWidget.selectedItems()[0].row())
+        print(self.tableWidget.selectedItems()[0].text())
+        row_num = self.tableWidget.selectedItems()[0].row()
+        id = self.tableWidget.item(row_num, 0).text()
+        print("id: {}".format(id))
+        connect.delete_one(id)
+        connect.commit()
+        self.update_signal.emit()
 

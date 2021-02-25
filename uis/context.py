@@ -14,7 +14,7 @@ from utils import TableWidget
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(800, 383)
+        Form.resize(715, 383)
         self.gridLayout_2 = QtWidgets.QGridLayout(Form)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.splitter = QtWidgets.QSplitter(Form)
