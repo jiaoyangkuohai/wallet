@@ -54,13 +54,17 @@ class Context(QWidget, Ui_Form):
         self.view.load(self.url)
 
     def del_one_item(self):
-        connect = DBOperation.get_instance()
-        print(self.tableWidget.selectedItems()[0].row())
-        print(self.tableWidget.selectedItems()[0].text())
-        row_num = self.tableWidget.selectedItems()[0].row()
-        id = self.tableWidget.item(row_num, 0).text()
-        print("id: {}".format(id))
-        connect.delete_one(id)
-        connect.commit()
-        self.update_signal.emit()
+        num = len(self.tableWidget.selectedItems())
+        if num == 0:
+            pass
+        else:
+            connect = DBOperation.get_instance()
+            print(self.tableWidget.selectedItems()[0].row())
+            print(self.tableWidget.selectedItems()[0].text())
+            row_num = self.tableWidget.selectedItems()[0].row()
+            id = self.tableWidget.item(row_num, 0).text()
+            print("id: {}".format(id))
+            connect.delete_one(id)
+            connect.commit()
+            self.update_signal.emit()
 

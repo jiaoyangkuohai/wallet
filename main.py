@@ -19,9 +19,9 @@ class Wallet(QMainWindow, Ui_MainWindow):
         self.add_info_window = AddInfoWindow(self.update_signal)
         self.setting_window = SettingWindow()
         self.confirm_window = ConfirmWindow(self.delete_signal)
-        self.del_action.triggered.connect(self.confirm_window.show)
-        self.setting_action.triggered.connect(self.setting_window.show)
-        self.add_action.triggered.connect(self.add_info_window.show)
+        self.del_action.triggered.connect(self.confirm_window.exec)
+        self.setting_action.triggered.connect(self.setting_window.exec)
+        self.add_action.triggered.connect(self.add_info_window.exec)
         self.refresh_action.triggered.connect(self.context.reload_url)
         self.setCentralWidget(self.context)
         self.update_signal.connect(self.context.reload_url)
@@ -37,6 +37,22 @@ class Wallet(QMainWindow, Ui_MainWindow):
         # self.context.tableWidget.cellClicked(self.fex)
 
         self.delete_signal.connect(self.context.del_one_item)
+        self._set_hotkey()
+
+    def _set_hotkey(self):
+        """设置热键"""
+
+        # 删除快捷键
+        self.del_action.setShortcut("F8")
+        self.del_action.setToolTip("快捷键F8")
+
+        # 刷新快捷键
+        self.refresh_action.setShortcut("F5")
+        self.refresh_action.setToolTip("快捷键F5")
+
+        # 增加快捷键
+        self.add_action.setShortcut("F6")
+        self.add_action.setToolTip("快捷键F6")
 
     def delet(self):
         print("1")

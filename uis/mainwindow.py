@@ -42,7 +42,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "消费统计"))
         self.toolBar.setWindowTitle(_translate("MainWindow", "toolBar"))
         self.setting_action.setText(_translate("MainWindow", "设置"))
         self.add_action.setText(_translate("MainWindow", "新增"))
