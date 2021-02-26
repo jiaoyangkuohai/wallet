@@ -84,10 +84,11 @@ class TableWidget(QTableWidget):  # 1
             row_num = item.row()
             id = self.item(row_num, 0).text()
             date = self.item(row_num, 1).text()
-            first_class = self.item(row_num, 2).text()
-            second_class = self.item(row_num, 3).text()
-            price = self.item(row_num, 4).text()
-            connect.update_one(id, date, first_class, second_class, price)
+            inout_class = self.item(row_num, 2).text()
+            first_class = self.item(row_num, 3).text()
+            second_class = self.item(row_num, 4).text()
+            price = self.item(row_num, 5).text()
+            connect.update_one(id, date, inout_class, first_class, second_class, price)
             connect.commit()
             self.signal.emit()
         except Exception as e:
@@ -116,7 +117,7 @@ class TableWidget(QTableWidget):  # 1
         self.setRowCount(row_num)
         self.setColumnCount(col_num)
 
-        classifier = ['id', '日期', '大类', '小类', '收入\支出']
+        classifier = ['id', '日期', '收入\支出', '大类', '小类', '金额']
         self.setHorizontalHeaderLabels(classifier)
         # 隐藏id
         self.setColumnHidden(0, True)

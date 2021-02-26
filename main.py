@@ -1,4 +1,5 @@
 import sys
+import os
 
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5.QtCore import pyqtSignal, Qt
@@ -15,7 +16,8 @@ class Wallet(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.context = Context(self.update_signal)
+        self.current_dir = os.path.abspath(os.path.dirname(__file__))
+        self.context = Context(self.update_signal, self.current_dir)
         self.add_info_window = AddInfoWindow(self.update_signal)
         self.setting_window = SettingWindow()
         self.confirm_window = ConfirmWindow(self.delete_signal)
@@ -43,8 +45,8 @@ class Wallet(QMainWindow, Ui_MainWindow):
         """设置热键"""
 
         # 删除快捷键
-        self.del_action.setShortcut("F8")
-        self.del_action.setToolTip("快捷键F8")
+        self.del_action.setShortcut("Del")
+        self.del_action.setToolTip("快捷键Delete")
 
         # 刷新快捷键
         self.refresh_action.setShortcut("F5")
@@ -62,5 +64,5 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
     demo = Wallet()
-    demo.show()
+    demo.showMaximized()
     sys.exit(app.exec_())

@@ -4,6 +4,15 @@ import sqlite3
 import pandas as pd
 
 
+class DBField:
+    id = "id"
+    firstClassifier = "firstClassifier"
+    secondClassifier = "secondClassifier"
+    inOut = "inOut"
+    inOutClassifier = "inOutClassifier"
+    inOutSelect = ["支出", "收入"]
+
+
 class DBOperation:
     """
     数据库的一系列操
@@ -23,12 +32,12 @@ class DBOperation:
         conn = sqlite3.connect(database_path)
         cursor = conn.cursor()
         if create_table:
-            cursor.execute("create table wallet(id INTEGER PRIMARY KEY AUTOINCREMENT, date text, firstClassifier text, secondClassifier text, inOut real)")
+            cursor.execute("create table wallet(id INTEGER PRIMARY KEY AUTOINCREMENT, date text, inOutClassifier text, firstClassifier text, secondClassifier text, inOut real)")
         return conn, cursor
 
     # 增
-    def insert_one(self, date='2020-10-05', firstClass='衣', secondClass='唯品会', price=300):
-        self.cursor.execute("insert into wallet values(null,?, ?,?,?)", (date, firstClass, secondClass, price))
+    def insert_one(self, date='2020-10-05', inOutClassifier="支出", firstClass='衣', secondClass='唯品会', price=300):
+        self.cursor.execute("insert into wallet values(null,?,?, ?,?,?)", (date, inOutClassifier, firstClass, secondClass, price))
 
 
     # 删
@@ -50,8 +59,8 @@ class DBOperation:
         return df
 
     # 改
-    def update_one(self, id=2, date='2020-10-04', firstClass='衣', secondClass='唯品会', price=4000):
-        self.cursor.execute("update wallet set date=?, firstClassifier=?, secondClassifier=?, inOut=? where id=?", (date, firstClass, secondClass, price, id))
+    def update_one(self, id=2, date='2020-10-04',inOutClassifier="支出", firstClass='衣', secondClass='唯品会', price=4000):
+        self.cursor.execute("update wallet set date=?, inOutClassifier=?, firstClassifier=?, secondClassifier=?, inOut=? where id=?", (date, inOutClassifier, firstClass, secondClass, price, id))
 
     def commit(self):
         self.conn.commit()

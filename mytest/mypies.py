@@ -1,4 +1,5 @@
 # https://gallery.pyecharts.org/#/Pie/pie_base
+import os
 import numpy as np
 import pandas as pd
 
@@ -15,19 +16,18 @@ from pyecharts.faker import Faker
 # )
 
 
-def render_df_html(df: pd.DataFrame):
+def render_df_html(df: pd.DataFrame, js_path="./js/"):
     labels = df.firstClassifier.tolist()
     values = df.inOut.tolist()
     print("render_df_html")
 
-
     c = (
-        Pie(init_opts=options.InitOpts(js_host="./"))
+        Pie(init_opts=options.InitOpts(width='1000px', height='800px', js_host=js_path))
              #.add("", [list(z) for z in zip(Faker.choose(), Faker.values())])
             .add("", [list(z) for z in zip(labels, values)])
-            .set_global_opts(title_opts=options.TitleOpts(title="Pie-基本示例"))
+            .set_global_opts(title_opts=options.TitleOpts(title="消费总览"))
             .set_series_opts(label_opts=options.LabelOpts(),
-                             center=["30%", "20%"], radius=[0, 100])
+                             center=["50%", "50%"], radius=[0, 200])
             .render("pie_base.html")
     )
 

@@ -6,13 +6,14 @@ from PyQt5.Qt import QUrl, QFileInfo
 from uis.context import Ui_Form
 
 from database import DBOperation
-from mytest.mypies import render_df_html
+from render_html import render_df_html
 
 
 class Context(QWidget, Ui_Form):
-    def __init__(self, update_signal):
+    def __init__(self, update_signal, main_path):
         super().__init__()
         self.setupUi(self)
+        self.main_path = main_path
         self.splitter.setSizes([200, 130])
         self.update_signal = update_signal
         self.tableWidget.set_signal(update_signal)
@@ -35,8 +36,8 @@ class Context(QWidget, Ui_Form):
         # self.index = "./mytest/render.html"
         # self.index = "./mytest/pie_set_color.html"
         # self.index = "./mytest/pie_base.html"
-        # self.index = "./pie_base.html"
-        self.index = "./template.html"
+        self.index = "./pie_base.html"
+        # self.index = "./template.html"
         # self.index = "./mytest/multiple_pie.html"
         html_path = QFileInfo(self.index).absoluteFilePath()
         print(html_path)
@@ -46,9 +47,10 @@ class Context(QWidget, Ui_Form):
 
     def reload_url(self):
         self.tableWidget.not_start = True
-        self.tableWidget.load_data_from_db()
+        self.df = self.tableWidget.load_data_from_db()
+        render_df_html(self.df)
         # 高分屏自适应
-        html_path = "./mytest/multiple_pie.html"
+        html_path = "./pie_base.html"
         html_path = QFileInfo(html_path).absoluteFilePath()
         self.url = QUrl("file:///" + html_path)
         self.view.load(self.url)
