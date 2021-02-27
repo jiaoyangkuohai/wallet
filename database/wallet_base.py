@@ -23,27 +23,27 @@ class DBOperation:
         return ops.get_instance()
 
     # 增
-    def insert_one(self, date='2020-10-05', inOutClassifier="支出", firstClass='衣', secondClass='唯品会', price=300):
-        NotImplemented
+    def insert_one(self, *args, **kwargs):
+        raise NotImplemented
 
     # 删
-    def delete_one(self, id=1):
-        NotImplemented
+    def delete_one(self, *args, **kwargs):
+        raise NotImplemented
 
     # 查
-    def search_more(self, date='2020-10-04'):
-        NotImplemented
+    def search_more(self, *args, **kwargs):
+        raise NotImplemented
 
     def search_all(self):
-        NotImplemented
+        raise NotImplemented
 
     # 改
-    def update_one(self, id=2, date='2020-10-04',inOutClassifier="支出", firstClass='衣', secondClass='唯品会', price=4000):
-        NotImplemented
+    def update_one(self, *args, **kwargs):
+        raise NotImplemented
 
-    def commit(self):
-        NotImplemented
+    def commit(self, *args, **kwargs):
+        raise NotImplemented
 
     # 提交并关闭数据库
-    def close_database(self):
-        NotImplemented
+    def close_database(self, *args, **kwargs):
+        raise NotImplemented
