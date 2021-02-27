@@ -23,20 +23,34 @@ def render_df_html(df: pd.DataFrame, js_path="./js/"):
         return
     # 收入\支出
     df1 = df.groupby(DBField.inOutClassifier, as_index=False).sum()
-    labels_inOut = df1.inOutClassifier.tolist()
-    values_inout = df1.inOut.tolist()
-    print(labels_inOut, values_inout)
+    if df1.shape[0] == 0:
+        labels_inOut = []
+        values_inout = []
+    else:
+        labels_inOut = df1.inOutClassifier.tolist()
+        values_inout = df1.inOut.tolist()
+        # print(labels_inOut, values_inout)
     # 支出
     df0 = df[df[DBField.inOutClassifier] == DBField.inOutSelect[0]]
-    df0 = df0.groupby(DBField.firstClassifier, as_index=False).sum()
-    labels = df0.firstClassifier.tolist()
-    values = df0.inOut.tolist()
+
+    if df0.shape[0] == 0:
+        labels = ["支出未填写"]
+        values = [1]
+    else:
+        df0 = df0.groupby(DBField.firstClassifier, as_index=False).sum()
+        labels = df0.firstClassifier.tolist()
+        values = df0.inOut.tolist()
 
     # 收入
     df2 = df[df[DBField.inOutClassifier] == DBField.inOutSelect[1]]
-    df2 = df2.groupby(DBField.firstClassifier, as_index=False).sum()
-    labels_in = df2.firstClassifier.tolist()
-    values_in = df2.inOut.tolist()
+
+    if df2.shape[0] == 0:
+        labels_in = ["收入未填写"]
+        values_in = [1]
+    else:
+        df2 = df2.groupby(DBField.firstClassifier, as_index=False).sum()
+        labels_in = df2.firstClassifier.tolist()
+        values_in = df2.inOut.tolist()
 
 
     label_size = 20

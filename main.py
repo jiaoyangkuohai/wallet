@@ -43,6 +43,9 @@ class Wallet(QMainWindow, Ui_MainWindow):
 
     def _set_hotkey(self):
         """设置热键"""
+        # 设置快捷键
+        self.setting_action.setShortcut("F4")
+        self.setting_action.setToolTip("快捷键F4")
 
         # 删除快捷键
         self.del_action.setShortcut("Del")

@@ -3,17 +3,12 @@ import sqlite3
 
 import pandas as pd
 
-
-class DBField:
-    id = "id"
-    firstClassifier = "firstClassifier"
-    secondClassifier = "secondClassifier"
-    inOut = "inOut"
-    inOutClassifier = "inOutClassifier"
-    inOutSelect = ["支出", "收入"]
+from database.wallet_base import DBOperation, DBField
+from database import register_model
 
 
-class DBOperation:
+@register_model("sqlite3")
+class SqliteDBOperation():
     """
     数据库的一系列操
     增删查改
@@ -55,7 +50,6 @@ class DBOperation:
     def search_all(self):
         sql = "select * from wallet"
         df = pd.read_sql(sql, self.conn)
-        print(df)
         return df
 
     # 改
@@ -71,31 +65,27 @@ class DBOperation:
         self.cursor.close()
         self.conn.close()
 
-def save_data():
-    sqlite3_db = DBOperation()
-    sqlite3_db.insert_one()
-    sqlite3_db.search_more()
-    sqlite3_db.delete_one()
-    sqlite3_db.search_more()
-    sqlite3_db.update_one()
-    df = sqlite3_db.search_more()
-    df = df.set_index("id")
-    sqlite3_db.search_all()
-    df.to_csv("./data/out.csv")
-    sqlite3_db.close_database()
+
+# def save_data():
+#     sqlite3_db = SqliteDBOperation()
+#     sqlite3_db.insert_one()
+#     sqlite3_db.search_more()
+#     sqlite3_db.delete_one()
+#     sqlite3_db.search_more()
+#     sqlite3_db.update_one()
+#     df = sqlite3_db.search_more()
+#     df = df.set_index("id")
+#     sqlite3_db.search_all()
+#     df.to_csv("./data/out.csv")
+#     sqlite3_db.close_database()
 
 
-def about_list():
-    sqlite3_db = DBOperation()
-    df = sqlite3_db.search_all()
-    print(df)
-    sqlite3_db.close_database()
-    a = df.firstClassifier.tolist()
-    b = df.inOut.tolist()
-    print(a)
-    print(b)
-
-
-if __name__ == '__main__':
-    # save_data()
-    about_list()
+# def about_list():
+#     sqlite3_db = SqliteDBOperation()
+#     df = sqlite3_db.search_all()
+#     print(df)
+#     sqlite3_db.close_database()
+#     a = df.firstClassifier.tolist()
+#     b = df.inOut.tolist()
+#     print(a)
+#     print(b)

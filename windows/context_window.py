@@ -30,8 +30,8 @@ class Context(QWidget, Ui_Form):
         # print(self.scrollAreaWidgetContents.geometry())
         # self.view.setGeometry(self.scrollAreaWidgetContents.geometry())
         self.view.resize(800, 800)
-        print(self.scrollArea.geometry())
-        print(self.view.geometry())
+        # print(self.scrollArea.geometry())
+        # print(self.view.geometry())
         # self.index = './data/template.html'
         # self.index = "./mytest/render.html"
         # self.index = "./mytest/pie_set_color.html"
@@ -40,7 +40,7 @@ class Context(QWidget, Ui_Form):
         # self.index = "./template.html"
         # self.index = "./mytest/multiple_pie.html"
         html_path = QFileInfo(self.index).absoluteFilePath()
-        print(html_path)
+        # print(html_path)
         self.url = QUrl("file:///"+html_path)
         self.view.load(self.url)
         self.scrollArea.setWidget(self.view)
@@ -61,11 +61,11 @@ class Context(QWidget, Ui_Form):
             pass
         else:
             connect = DBOperation.get_instance()
-            print(self.tableWidget.selectedItems()[0].row())
-            print(self.tableWidget.selectedItems()[0].text())
+            # print(self.tableWidget.selectedItems()[0].row())
+            # print(self.tableWidget.selectedItems()[0].text())
             row_num = self.tableWidget.selectedItems()[0].row()
             id = self.tableWidget.item(row_num, 0).text()
-            print("id: {}".format(id))
+            # print("id: {}".format(id))
             connect.delete_one(id)
             connect.commit()
             self.update_signal.emit()

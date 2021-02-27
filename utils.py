@@ -10,7 +10,7 @@ from database import DBOperation
 class TableWidget(QTableWidget):  # 1
     def __init__(self, parent):
         super(TableWidget, self).__init__(parent=parent)
-        self.db = DBOperation()
+        self.db = DBOperation.get_instance()
         # self.cellClicked.connect(self.get_row)
         # self.itemClicked.connect(self.get_row)
         self.not_start = True
@@ -71,9 +71,9 @@ class TableWidget(QTableWidget):  # 1
         """
         更新数据库
         """
-        print("进入数据库更新: {}, {}".format(item.row(), item.column()))
+        # print("进入数据库更新: {}, {}".format(item.row(), item.column()))
         if self.not_start:
-            print("not start")
+            # print("not start")
             return
         try:
             # print(item.row(), item.column())
