@@ -19,7 +19,7 @@ class Wallet(QMainWindow, Ui_MainWindow):
         self.current_dir = os.path.abspath(os.path.dirname(__file__))
         self.context = Context(self.update_signal, self.current_dir)
         self.add_info_window = AddInfoWindow(self.update_signal)
-        self.setting_window = SettingWindow()
+        self.setting_window = SettingWindow(self.update_signal)
         self.confirm_window = ConfirmWindow(self.delete_signal)
         self.del_action.triggered.connect(self.confirm_window.exec)
         self.setting_action.triggered.connect(self.setting_window.exec)
@@ -58,9 +58,6 @@ class Wallet(QMainWindow, Ui_MainWindow):
         # 增加快捷键
         self.add_action.setShortcut("F6")
         self.add_action.setToolTip("快捷键F6")
-
-    def delet(self):
-        print("1")
 
 
 if __name__ == '__main__':

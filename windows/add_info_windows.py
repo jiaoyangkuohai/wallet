@@ -1,7 +1,9 @@
+import re
 from PyQt5.QtWidgets import QDialogButtonBox, QDialog
 
 from uis.add_info import Ui_Dialog
 from database import DBOperation, DBField
+from utils import settings, Configs, check_price
 
 
 class AddInfoWindow(QDialog, Ui_Dialog):
@@ -14,14 +16,15 @@ class AddInfoWindow(QDialog, Ui_Dialog):
         self.signal = update_signal
 
     def accept(self):
-        connect = DBOperation.get_instance()
+        db_path = settings.value(Configs.db_path)
+        connect = DBOperation.get_instance(db_path)
         qdate = self.calendarWidget.selectedDate()
         date = "{}-{}-{}".format(qdate.year(), qdate.month(), qdate.day())
         inout_class = self.comboBox_3.currentText()
         first_class = self.comboBox.currentText()
         second_class = self.comboBox_2.currentText()
         price = self.lineEdit.text()
-        if price != "":
+        if price != "" and check_price(price):
             connect.insert_one(date, inout_class, first_class, second_class, price)
             connect.commit()
         self.signal.emit()

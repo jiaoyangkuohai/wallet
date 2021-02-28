@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from utils import TableWidget
+from windows.win_utils import TableWidget
 
 class Ui_Form(object):
     def setupUi(self, Form):

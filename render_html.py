@@ -19,13 +19,13 @@ from database import DBField
 
 
 def render_df_html(df: pd.DataFrame, js_path="./js/"):
-    if df.shape[0] == 0:
-        return
+    # if df.shape[0] == 0:
+    #     return
     # 收入\支出
     df1 = df.groupby(DBField.inOutClassifier, as_index=False).sum()
     if df1.shape[0] == 0:
-        labels_inOut = []
-        values_inout = []
+        labels_inOut = ["收入支出未填写"]
+        values_inout = [1]
     else:
         labels_inOut = df1.inOutClassifier.tolist()
         values_inout = df1.inOut.tolist()

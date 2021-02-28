@@ -16,11 +16,11 @@ class DBField:
     db_type = ["sqlite3", "mysql"]
 
 
-class DBOperation:
+class DBOperation(object):
     @classmethod
-    def get_instance(cls):
+    def get_instance(cls, *args, **kwargs):
         ops = DBOps["sqlite3"]
-        return ops.get_instance()
+        return ops. get_instance(*args, **kwargs)
 
     # 增
     def insert_one(self, *args, **kwargs):
@@ -35,6 +35,10 @@ class DBOperation:
         raise NotImplemented
 
     def search_all(self):
+        raise NotImplemented
+
+    # 按照时间段查询
+    def search_range(self, *args, **kwargs):
         raise NotImplemented
 
     # 改

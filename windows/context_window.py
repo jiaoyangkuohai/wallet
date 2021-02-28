@@ -7,6 +7,7 @@ from uis.context import Ui_Form
 
 from database import DBOperation
 from render_html import render_df_html
+from utils import settings, Configs
 
 
 class Context(QWidget, Ui_Form):
@@ -60,7 +61,8 @@ class Context(QWidget, Ui_Form):
         if num == 0:
             pass
         else:
-            connect = DBOperation.get_instance()
+            db_path = settings.value(Configs.db_path)
+            connect = DBOperation.get_instance(db_path)
             # print(self.tableWidget.selectedItems()[0].row())
             # print(self.tableWidget.selectedItems()[0].text())
             row_num = self.tableWidget.selectedItems()[0].row()
