@@ -1,5 +1,6 @@
 import sys
 import os
+import traceback
 
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5.QtCore import pyqtSignal, Qt
@@ -7,6 +8,7 @@ from PyQt5.Qt import QRect
 
 from uis.mainwindow import Ui_MainWindow
 from windows import Context, AddInfoWindow, SettingWindow, ConfirmWindow
+from SingleApplication import QSingleApplication
 
 
 class Wallet(QMainWindow, Ui_MainWindow):
@@ -60,9 +62,25 @@ class Wallet(QMainWindow, Ui_MainWindow):
         self.add_action.setToolTip("快捷键F6")
 
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
+def run():
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
-    demo = Wallet()
-    demo.showMaximized()
-    sys.exit(app.exec_())
+    app = QSingleApplication(sys.argv)
+    try:
+        if app.isRunning():
+            # 发送信息
+            app.sendMessage('app is running.')
+            # 激活之前的窗口
+            app.activateWindow()
+            sys.exit(0)
+
+        wallet = Wallet()
+        wallet.showMaximized()
+        sys.exit(app.exec_())
+    except Exception as e:
+        traceback.print_exc()
+    finally:
+        app.removeServer()
+
+
+if __name__ == '__main__':
+    run()

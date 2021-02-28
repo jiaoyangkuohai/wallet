@@ -1,3 +1,5 @@
 pyecharts
-pyqt
+pyqt5
 numpy
+pandas
+PyQtWebEngine
