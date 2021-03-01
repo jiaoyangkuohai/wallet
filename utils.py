@@ -10,7 +10,7 @@ from PyQt5.QtCore import Qt, QModelIndex, QSettings, QTextCodec
 
 
 class Configs:
-    db_path = "da_path"
+    db_path = "db_path"
     start_time = "start_time"
     end_time = "end_time"
     default_db_name = "wallet_data.db"
