@@ -14,6 +14,8 @@ class Configs:
     start_time = "start_time"
     end_time = "end_time"
     default_db_name = "wallet_data.db"
+    first_classifier = "first_classifier"
+    second_classifier = "second_classifier"
 
 
 def _get_settings(config_dir=None):
