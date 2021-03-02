@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="img">
+        <file alias="zhifu.ico">img/zhifu.ico</file>
+    </qresource>
+</RCC>

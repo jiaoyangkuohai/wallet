@@ -4,11 +4,12 @@ import traceback
 
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5.QtCore import pyqtSignal, Qt
-from PyQt5.Qt import QRect
+from PyQt5.Qt import QRect, QIcon
 
 from uis.mainwindow import Ui_MainWindow
 from windows import Context, AddInfoWindow, SettingWindow, ConfirmWindow
 from SingleApplication import QSingleApplication
+import img
 
 
 class Wallet(QMainWindow, Ui_MainWindow):
@@ -36,6 +37,13 @@ class Wallet(QMainWindow, Ui_MainWindow):
                                   800, 600)
         self.setGeometry(self.default_size)
         self.context.tableWidget.not_start = False
+
+        self.icon = QIcon(":img/zhifu.ico")
+        self.setWindowIcon(self.icon)
+        self.setting_window.setWindowIcon(self.icon)
+        self.add_info_window.setWindowIcon(self.icon)
+        self.confirm_window.setWindowIcon(self.icon)
+
 
         # print(self.context.tableWidget.selectedItems()[0].row())
         # self.context.tableWidget.cellClicked(self.fex)

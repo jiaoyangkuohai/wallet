@@ -23,9 +23,6 @@ def register_model(name: str):
     return register_model_cls
 
 
-for file in os.listdir(os.path.dirname(__file__)):
-    if file.endswith(".py") and not file.startswith("_"):
-        model_lib = file[:file.find(".py")]
-        importlib.import_module('database.' + model_lib)
+from database.sqlite_operation import SqliteDBOperation
 
 from database.wallet_base import DBOperation, DBField
