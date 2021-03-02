@@ -1,5 +1,7 @@
 import re
 from PyQt5.QtWidgets import QDialogButtonBox, QDialog
+from PyQt5.QtCore import Qt
+from PyQt5.Qt import QCompleter
 
 from uis.add_info import Ui_Dialog
 from database import DBOperation, DBField
@@ -23,6 +25,7 @@ class AddInfoWindow(QDialog, Ui_Dialog):
         if self.second_classifier_items is None:
             self.second_classifier_items = []
         self.comboBox_2.addItems(self.second_classifier_items)
+        self._init_combobox_completer()
 
     def accept(self):
         db_path = settings.value(Configs.db_path)
@@ -51,3 +54,23 @@ class AddInfoWindow(QDialog, Ui_Dialog):
             settings.setValue(Configs.second_classifier, self.second_classifier_items)
         self.comboBox_2.clear()
         self.comboBox_2.addItems(self.second_classifier_items)
+
+        self._init_combobox_completer()
+
+    def _init_combobox_completer(self):
+        # 增加自动补全
+        items_list = settings.value(Configs.first_classifier)
+        _add_completer(items_list, self.comboBox)
+
+        items_list_2 = settings.value(Configs.second_classifier)
+        _add_completer(items_list_2, self.comboBox_2)
+
+
+def _add_completer(items_list, combobox):
+    if items_list is None:
+        items_list = []
+    completer = QCompleter(items_list)
+    completer.setFilterMode(Qt.MatchContains)
+    completer.setCompletionMode(QCompleter.PopupCompletion)
+    combobox.setCompleter(completer)
+
