@@ -48,6 +48,11 @@ class SettingWindow(QDialog, Ui_Dialog):
         self.dateEdit_2.setDate(current)
         self.dateEdit_2.setDisplayFormat("yyyy-MM-dd")
 
+        if settings.value(Configs.start_time) is None:
+            settings.setValue(Configs.start_time, self.dateEdit.text())
+        if settings.value(Configs.end_time) is None:
+            settings.setValue(Configs.end_time, self.dateEdit_2.text())
+
     def use_settings_line_edit(self):
         self.lineEdit.setText(settings.value(Configs.db_path))
 
