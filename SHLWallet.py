@@ -51,6 +51,10 @@ class Wallet(QMainWindow, Ui_MainWindow):
         self.delete_signal.connect(self.context.del_one_item)
         self._set_hotkey()
 
+    def showMinimized(self) -> None:
+        print("sss")
+        super().showMinimized()
+
     def _set_hotkey(self):
         """设置热键"""
         # 设置快捷键
