@@ -36,11 +36,11 @@ class AddInfoWindow(QDialog, Ui_Dialog):
         if price != "" and check_price(price):
             connect.insert_one(date, inout_class, first_class, second_class, price)
             connect.commit()
-            self.add_comboBox_items(first_class, second_class)
+            self.add_clear_combobox_items(first_class, second_class)
         self.signal.emit()
         self.close()
 
-    def add_combobox_items(self, first_class, second_class):
+    def add_clear_combobox_items(self, first_class, second_class):
         if first_class not in self.first_classifier_items:
             self.first_classifier_items.append(first_class)
             settings.setValue(Configs.first_classifier, self.first_classifier_items)
