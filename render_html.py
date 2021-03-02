@@ -53,8 +53,8 @@ def render_df_html(df: pd.DataFrame, js_path="./js/"):
         values_in = df2.inOut.tolist()
 
 
-    label_size = 20
-    title_size = 25
+    label_size = 12
+    title_size = 20
 
     c = (
         Pie(init_opts=options.InitOpts(width='1000px', height='800px', js_host=js_path))

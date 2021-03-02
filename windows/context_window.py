@@ -15,7 +15,7 @@ class Context(QWidget, Ui_Form):
         super().__init__()
         self.setupUi(self)
         self.main_path = main_path
-        self.splitter.setSizes([200, 130])
+        self.splitter.setSizes([200, 300])
         self.update_signal = update_signal
         self.tableWidget.set_signal(update_signal)
         # self._init_table()
