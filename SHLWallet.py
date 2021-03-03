@@ -7,7 +7,7 @@ from PyQt5.QtCore import pyqtSignal, Qt
 from PyQt5.Qt import QRect, QIcon
 
 from uis.mainwindow import Ui_MainWindow
-from windows import Context, AddInfoWindow, SettingWindow, ConfirmWindow
+from windows import Context, AddInfoWindow, SettingWindow, ConfirmWindow, ConfirmExitWindow
 from SingleApplication import QSingleApplication
 import img
 
@@ -15,6 +15,7 @@ import img
 class Wallet(QMainWindow, Ui_MainWindow):
     update_signal = pyqtSignal()
     delete_signal = pyqtSignal()
+    exit_signal = pyqtSignal()
 
     def __init__(self):
         super().__init__()
@@ -24,12 +25,15 @@ class Wallet(QMainWindow, Ui_MainWindow):
         self.add_info_window = AddInfoWindow(self.update_signal)
         self.setting_window = SettingWindow(self.update_signal)
         self.confirm_window = ConfirmWindow(self.delete_signal)
+        self.confirm_exit_window = ConfirmExitWindow(self.exit_signal)
         self.del_action.triggered.connect(self.confirm_window.exec)
         self.setting_action.triggered.connect(self.setting_window.exec)
         self.add_action.triggered.connect(self.add_info_window.exec)
         self.refresh_action.triggered.connect(self.context.reload_url)
         self.setCentralWidget(self.context)
         self.update_signal.connect(self.context.reload_url)
+        self.app = None
+
         # 默认窗口大小
         primary_screen_rect = QApplication.primaryScreen().geometry()
         self.default_size = QRect(int((primary_screen_rect.width() - 800) / 2) + primary_screen_rect.x(),
@@ -49,10 +53,10 @@ class Wallet(QMainWindow, Ui_MainWindow):
         # self.context.tableWidget.cellClicked(self.fex)
 
         self.delete_signal.connect(self.context.del_one_item)
+        self.exit_signal.connect(self.closeApp)
         self._set_hotkey()
 
     def showMinimized(self) -> None:
-        print("sss")
         super().showMinimized()
 
     def _set_hotkey(self):
@@ -78,6 +82,15 @@ class Wallet(QMainWindow, Ui_MainWindow):
         if self.isHidden():
             self.show()
 
+    def closeEvent(self, event):
+        self.confirm_exit_window.show()
+        event.ignore()
+
+    def setApp(self, app):
+        self.app = app
+
+    def closeApp(self):
+        self.app.quit()
 
 def run():
     try:
@@ -92,6 +105,7 @@ def run():
                 sys.exit(0)
             wallet = Wallet()
             app.messageReceived.connect(wallet.singleton)
+            wallet.setApp(app)
             app.setActivationWindow(wallet)
             wallet.showMaximized()
             sys.exit(app.exec_())
