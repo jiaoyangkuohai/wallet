@@ -47,6 +47,7 @@ class Wallet(QMainWindow, Ui_MainWindow):
         self.setting_window.setWindowIcon(self.icon)
         self.add_info_window.setWindowIcon(self.icon)
         self.confirm_window.setWindowIcon(self.icon)
+        self.confirm_exit_window.setWindowIcon(self.icon)
 
 
         # print(self.context.tableWidget.selectedItems()[0].row())
