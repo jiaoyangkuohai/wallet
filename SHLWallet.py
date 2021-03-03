@@ -73,25 +73,36 @@ class Wallet(QMainWindow, Ui_MainWindow):
         self.add_action.setShortcut("F6")
         self.add_action.setToolTip("快捷键F6")
 
+    def singleton(self, mess):
+        # 接受再次启动时，发送过来的信息
+        if self.isHidden():
+            self.show()
+
 
 def run():
-    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
-    app = QSingleApplication(sys.argv)
     try:
-        if app.isRunning():
-            # 发送信息
-            app.sendMessage('app is running.')
-            # 激活之前的窗口
-            app.activateWindow()
-            sys.exit(0)
-
-        wallet = Wallet()
-        wallet.showMaximized()
-        sys.exit(app.exec_())
+        QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
+        app = QSingleApplication(sys.argv)
+        try:
+            if app.isRunning():
+                # 发送信息
+                app.sendMessage('app is running.')
+                # 激活之前的窗口
+                app.activateWindow()
+                sys.exit(0)
+            wallet = Wallet()
+            app.messageReceived.connect(wallet.singleton)
+            app.setActivationWindow(wallet)
+            wallet.showMaximized()
+            sys.exit(app.exec_())
+        except Exception as e:
+            traceback.print_exc()
+        finally:
+            app.removeServer()
     except Exception as e:
         traceback.print_exc()
     finally:
-        app.removeServer()
+        pass
 
 
 if __name__ == '__main__':

@@ -102,5 +102,6 @@ class QSingleApplication(QApplication):
             self.messageReceived.emit(message.data().decode())
 
     def removeServer(self):
-        self._socketServer.close()
-        self._socketServer.removeServer(self._socketName)
+        if self._socketServer is not None:
+            self._socketServer.close()
+            self._socketServer.removeServer(self._socketName)
