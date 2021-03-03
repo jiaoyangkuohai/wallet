@@ -8,9 +8,3 @@
 
 ## 打包编译
 使用snap
-
-```python
-# 修改PInstaller/hooks/pycparser.py
-from PyInstaller.utils.hooks import collect_data_files,copy_metadata
-datas = collect_data_files('pyecharts')+copy_metadata('prettytable')
-```
