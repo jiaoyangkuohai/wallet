@@ -1,4 +1,5 @@
 from PyQt5.QtCore import Qt
+from PyQt5.Qt import QColor
 from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QAbstractItemView, QMenu
 import traceback
 import numpy as np
@@ -106,9 +107,6 @@ class TableWidget(QTableWidget):  # 1
         except Exception as e:
             print(e)
 
-
-
-
     def load_data_from_db(self):
         """
         从数据库中获取数据
@@ -140,6 +138,8 @@ class TableWidget(QTableWidget):  # 1
                 input_table_items = str(input_table_items_list)
                 newItem = QTableWidgetItem(input_table_items)
                 newItem.setTextAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+                if input_table_rows_values_list[2] == "收入":
+                    newItem.setBackground(QColor("#C2FF68"))
                 self.setItem(i, j, newItem)
 
         self.not_start = False

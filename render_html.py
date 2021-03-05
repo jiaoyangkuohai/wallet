@@ -27,6 +27,7 @@ def render_df_html(df: pd.DataFrame, js_path="./js/"):
         labels_inOut = ["收入支出未填写"]
         values_inout = [1]
     else:
+        df1 = df1.round({DBField.inOut: 2})
         labels_inOut = df1.inOutClassifier.tolist()
         values_inout = df1.inOut.tolist()
         # print(labels_inOut, values_inout)
@@ -38,6 +39,7 @@ def render_df_html(df: pd.DataFrame, js_path="./js/"):
         values = [1]
     else:
         df0 = df0.groupby(DBField.firstClassifier, as_index=False).sum()
+        df0 = df0.round({DBField.inOut: 2})
         labels = df0.firstClassifier.tolist()
         values = df0.inOut.tolist()
 
@@ -49,6 +51,7 @@ def render_df_html(df: pd.DataFrame, js_path="./js/"):
         values_in = [1]
     else:
         df2 = df2.groupby(DBField.firstClassifier, as_index=False).sum()
+        df2 = df2.round({DBField.inOut: 2})
         labels_in = df2.firstClassifier.tolist()
         values_in = df2.inOut.tolist()
 
