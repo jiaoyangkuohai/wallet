@@ -51,7 +51,8 @@ def check_price(price):
 
 
 def process_date(date="2021-02-27"):
-    if date is None:
-        return date
-    y, m, d = date.split("-")
-    return "-".join([y, str(int(m)), str(int(d))])
+    return date
+    # if date is None:
+    #     return date
+    # y, m, d = date.split("-")
+    # return "-".join([y, str(int(m)), str(int(d))])
