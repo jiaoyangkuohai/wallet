@@ -3,13 +3,13 @@ import sqlite3
 
 import pandas as pd
 
-from database.wallet_base import DBOperation, DBField
+from database.wallet_base import DBOperation
 from database import register_model
 
-from utils import settings, Configs, process_date
+from utils import settings, Configs, process_date, DBField
 
 
-@register_model("sqlite3")
+@register_model(DBField.db_type[0])
 class SqliteDBOperation(DBOperation):
     """
     数据库的一系列操
@@ -19,8 +19,8 @@ class SqliteDBOperation(DBOperation):
         self.conn, self.cursor = self.get_conn(db_path)
 
     @classmethod
-    def get_instance(cls, db_path) -> DBOperation:
-        return cls(db_path)
+    def get_instance(cls, *args, **kwargs) -> DBOperation:
+        return cls(settings.value(Configs.db_path))
 
     # 获取游标
     # todo 不能每次都连接

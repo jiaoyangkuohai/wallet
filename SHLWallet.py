@@ -7,7 +7,7 @@ from PyQt5.QtCore import pyqtSignal, Qt
 from PyQt5.Qt import QRect, QIcon
 
 from uis.mainwindow import Ui_MainWindow
-from windows import Context, AddInfoWindow, SettingWindow, ConfirmWindow, ConfirmExitWindow
+from windows import Context, AddInfoWindow, SettingWindow, ConfirmWindow, ConfirmExitWindow, SettingWindow
 from SingleApplication import QSingleApplication
 import img
 

@@ -61,8 +61,7 @@ class Context(QWidget, Ui_Form):
         if num == 0:
             pass
         else:
-            db_path = settings.value(Configs.db_path)
-            connect = DBOperation.get_instance(db_path)
+            connect = DBOperation.get_instance()
             # print(self.tableWidget.selectedItems()[0].row())
             # print(self.tableWidget.selectedItems()[0].text())
             row_num = self.tableWidget.selectedItems()[0].row()

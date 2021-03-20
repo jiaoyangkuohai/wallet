@@ -24,5 +24,5 @@ def register_model(name: str):
 
 
 from database.sqlite_operation import SqliteDBOperation
-
-from database.wallet_base import DBOperation, DBField
+from database.mysql_peration import MySQLDBOperation
+from database.wallet_base import DBOperation

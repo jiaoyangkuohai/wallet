@@ -1,25 +1,11 @@
-import os
-import sqlite3
-
-import pandas as pd
-from database import register_model
 from database import DBOps
-
-class DBField:
-    id = "id"
-    firstClassifier = "firstClassifier"
-    secondClassifier = "secondClassifier"
-    inOut = "inOut"
-    inOutClassifier = "inOutClassifier"
-    inOutSelect = ["支出", "收入"]
-
-    db_type = ["sqlite3", "mysql"]
+from utils import settings, DBField, Configs
 
 
 class DBOperation(object):
     @classmethod
     def get_instance(cls, *args, **kwargs):
-        ops = DBOps["sqlite3"]
+        ops = DBOps[settings.value(Configs.db_used)]
         return ops. get_instance(*args, **kwargs)
 
     # 增

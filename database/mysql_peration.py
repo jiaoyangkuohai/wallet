@@ -10,10 +10,11 @@ import pandas as pd
 import numpy as np
 
 from database.wallet_base import DBOperation
-from database import register_model
+from database import register_model, SqliteDBOperation
+from utils import DBField, settings, Configs
 
 
-# @register_model("mysql")
+@register_model(DBField.db_type[1])
 class MySQLDBOperation(DBOperation):
     """
     MySQL数据库的一系列操作
@@ -21,39 +22,64 @@ class MySQLDBOperation(DBOperation):
     def __init__(self, *args, **kwargs):
         self.conn, self.cursor = self.get_conn(**kwargs)
 
-    def get_conn(self, host, user, password, database):
-        conn = pymysql.connect(host=host,
-                               user=user,
-                               password=password,
-                               database=database)
+    def get_conn(self, *args, **kwargs):
+        conn = pymysql.connect(host=settings.value(Configs.mysql_host),
+                               user=settings.value(Configs.mysql_user),
+                               password=settings.value(Configs.mysql_password),
+                               database=settings.value(Configs.mysql_database),
+                               port=int(settings.value(Configs.mysql_port)))
         cursor = conn.cursor()
+        conn.ping()
         return conn, cursor
 
     @classmethod
     def get_instance(cls, *args, **kwargs):
-
-        return cls(*args, **kwargs)
+        try:
+            return cls(*args, **kwargs)
+        except Exception as e:
+            settings.setValue(Configs.db_used, DBField.db_type[0])
+            return SqliteDBOperation.get_instance()
 
     def insert_one(self, dateInput='2020-12-05', inOutClassifier="支出", firstClass='衣', secondClass='唯品会', price=300):
-        self.cursor.execute("insert into wallet values(null,'{}','{}', '{}','{}',{})".format(dateInput, inOutClassifier, firstClass, secondClass, price))
+        try:
+            table_name = settings.value(Configs.mysql_table)
+            self.cursor.execute("insert into {} values(null,'{}','{}', '{}','{}',{})".format(table_name, dateInput, inOutClassifier, firstClass, secondClass, price))
+        except Exception as e:
+            pass
 
     def delete_one(self, id=1):
-        self.cursor.execute("delete from wallet where id={}".format(id))
+        try:
+            table_name = settings.value(Configs.mysql_table)
+            self.cursor.execute("delete from {} where id={}".format(table_name, id))
+        except Exception as e:
+            pass
 
     def search_more(self, dateInput='2020-10-04'):
-        sql = "select * from wallet where dateInput='{}'".format(dateInput)
-        df = pd.read_sql(sql, self.conn)
-        return df
+        try:
+            table_name = settings.value(Configs.mysql_table)
+            sql = "select * from {} where dateInput='{}'".format(table_name, dateInput)
+            df = pd.read_sql(sql, self.conn)
+            return df
+        except Exception as e:
+            return self._panda_df()
 
     def search_all(self):
-        sql = "select * from wallet"
-        df = pd.read_sql(sql, self.conn)
-        return df
+        try:
+            table_name = settings.value(Configs.mysql_table)
+            sql = "select * from {}".format(table_name)
+            df = pd.read_sql(sql, self.conn)
+            return df
+        except Exception as e:
+            return self._panda_df()
 
     def search_range(self, start, end):
-        sql = "select * from wallet where dateInput>='{}' and dateInput<='{}'".format(start, end)
-        df = pd.read_sql(sql, self.conn)
-        return df
+        try:
+            table_name = settings.value(Configs.mysql_table)
+            sql = "select * from {} where dateInput>='{}' and dateInput<='{}'".format(table_name, start, end)
+            df = pd.read_sql(sql, self.conn)
+            return df
+        except Exception as e:
+            return self._panda_df()
 
     def update_one(self, id=2,
                    dateInput='2020-10-04',
@@ -61,8 +87,16 @@ class MySQLDBOperation(DBOperation):
                    firstClass='衣',
                    secondClass='唯品会',
                    price=4000):
-        self.cursor.execute(
-            "update wallet set dateInput='{}', inOutClassifier='{}', firstClassifier='{}', secondClassifier='{}', `inOut`={} where id={}".format(dateInput, inOutClassifier, firstClass, secondClass, price, id))
+        try:
+            table_name = settings.value(Configs.mysql_table)
+            self.cursor.execute(
+                "update {} set dateInput='{}', inOutClassifier='{}', firstClassifier='{}', secondClassifier='{}', `inOut`={} where id={}".format(table_name, dateInput, inOutClassifier, firstClass, secondClass, price, id))
+        except Exception as e:
+            pass
+
+    def _panda_df(self):
+        return pd.DataFrame(columns=[DBField.id, DBField.dateInput, DBField.inOutClassifier,
+                                     DBField.firstClassifier, DBField.secondClassifier, DBField.inOut])
 
     def commit(self):
         return self.conn.commit()

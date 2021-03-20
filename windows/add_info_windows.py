@@ -4,8 +4,8 @@ from PyQt5.QtCore import Qt
 from PyQt5.Qt import QCompleter
 
 from uis.add_info import Ui_Dialog
-from database import DBOperation, DBField
-from utils import settings, Configs, check_price
+from database import DBOperation
+from utils import settings, Configs, check_price, DBField
 
 
 class AddInfoWindow(QDialog, Ui_Dialog):
@@ -28,8 +28,7 @@ class AddInfoWindow(QDialog, Ui_Dialog):
         self._init_combobox_completer()
 
     def accept(self):
-        db_path = settings.value(Configs.db_path)
-        connect = DBOperation.get_instance(db_path)
+        connect = DBOperation.get_instance()
         qdate = self.calendarWidget.selectedDate()
         # date = "{}-{}-{}".format(qdate.year(), qdate.month(), qdate.day())
         date = qdate.toString("yyyy-MM-dd")

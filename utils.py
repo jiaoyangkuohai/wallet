@@ -8,6 +8,16 @@ from PyQt5.QtCore import Qt, QModelIndex, QSettings, QTextCodec
 #     def __init__(self):
 #         self.db_path = ""
 
+class DBField:
+    id = "id"
+    dateInput = "dateInput"
+    firstClassifier = "firstClassifier"
+    secondClassifier = "secondClassifier"
+    inOut = "inOut"
+    inOutClassifier = "inOutClassifier"
+    inOutSelect = ["支出", "收入"]
+
+    db_type = ["sqlite3", "mysql"]
 
 class Configs:
     db_path = "db_path"
@@ -16,6 +26,14 @@ class Configs:
     default_db_name = "wallet_data.db"
     first_classifier = "first_classifier"
     second_classifier = "second_classifier"
+    db_used = "db_used"
+
+    mysql_host = "host"
+    mysql_port = "port"
+    mysql_user = "user_name"
+    mysql_password = "password"
+    mysql_database = "database"
+    mysql_table = "table"
 
 
 def _get_settings(config_dir=None):
@@ -32,6 +50,9 @@ def _get_settings(config_dir=None):
 
     settings_obj = QSettings(config_file, QSettings.IniFormat)
     settings_obj.setIniCodec(QTextCodec.codecForName("utf-8"))
+
+    if settings_obj.value(Configs.db_used) is None:
+        settings_obj.setValue(Configs.db_used, DBField.db_type[0])
 
     if settings_obj.value(Configs.db_path) is None:
         settings_obj.setValue(Configs.db_path, os.path.abspath(os.path.join("./", Configs.default_db_name)))

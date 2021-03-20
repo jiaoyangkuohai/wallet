@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 
 from database import DBOperation
-from utils import settings, Configs, check_price
+from utils import settings, Configs, check_price, DBField
 
 
 class TableWidget(QTableWidget):  # 1
@@ -81,8 +81,7 @@ class TableWidget(QTableWidget):  # 1
             # print(item.text())
             # row_index = self.selectedItems()[0].row()
             # print(self.item(item.row(), 0).text())
-            db_path = settings.value(Configs.db_path)
-            connect = DBOperation.get_instance(db_path)
+            connect = DBOperation.get_instance()
             row_num = item.row()
             id = self.item(row_num, 0).text()
             date = self.item(row_num, 1).text()
@@ -112,8 +111,9 @@ class TableWidget(QTableWidget):  # 1
         从数据库中获取数据
         :return:
         """
-        db_path = settings.value(Configs.db_path)
-        db = DBOperation.get_instance(db_path)
+        # db_path = settings.value(Configs.db_path)
+        # db = DBOperation.get_instance(db_path)
+        db = DBOperation.get_instance()
         # df: pd.DataFrame = db.search_all()
         start_time = settings.value(Configs.start_time)
         end_time = settings.value(Configs.end_time)
