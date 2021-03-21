@@ -111,7 +111,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        Dialog.setWindowTitle(_translate("Dialog", "设置"))
         self.label.setText(_translate("Dialog", "数据存放地址："))
         self.radioButton.setText(_translate("Dialog", "SQLite3"))
         self.radioButton_2.setText(_translate("Dialog", "MySQL"))
