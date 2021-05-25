@@ -75,7 +75,7 @@ class MySQLDBOperation(DBOperation):
     def search_range(self, start, end):
         try:
             table_name = settings.value(Configs.mysql_table)
-            sql = "select * from {} where dateInput>='{}' and dateInput<='{}'".format(table_name, start, end)
+            sql = "select * from {} where dateInput>='{}' and dateInput<='{}' order by dateInput".format(table_name, start, end)
             df = pd.read_sql(sql, self.conn)
             return df
         except Exception as e:

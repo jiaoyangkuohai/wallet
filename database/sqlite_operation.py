@@ -56,7 +56,7 @@ class SqliteDBOperation(DBOperation):
 
     # 按照时间段查询
     def search_range(self, start, end):
-        sql = "select * from wallet where dateInput>=? and dateInput<=?"
+        sql = "select * from wallet where dateInput>=? and dateInput<=? order by dateInput"
         df = pd.read_sql(sql, self.conn, params=(process_date(start), process_date(end)))
         # print("search range: {} and {}".format(start, end))
         # print(df)
